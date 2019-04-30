@@ -1,0 +1,401 @@
+- Class: meta
+  Course: socne week 06
+  Lesson: week 06
+  Author: Adrian Rauchfleisch (borrowed parts from Gaston Sanchez)
+  Type: Standard
+  Organization: National Taiwan University
+  Version: 1.0.0
+
+- Class: text
+  Output: Dear Taida students, welcome to my R and RStudio introduction course. Whenever you see three points below (e.g. `...`) then press the Enter-key to continue the lesson. Now press the Enter-key to continue.
+
+- Class: text
+  Output: In this lesson, we`ll cover strings and regex in R.
+
+- Class: text
+  Output: The function paste() is perhaps one of the most important functions that you can use to create and build strings. paste() takes one or more R objects, converts them to "character", and then it concatenates (pastes) them to form one or several character strings. Its usage has the following form
+
+- Class: text
+  Output: paste(..., sep = " ", collapse = NULL) The argument ... means that it takes any number of objects. The argument sep is a character string that is used as a separator. The argument collapse is an optional string to indicate if you want all the terms to be collapsed into a single string.
+
+- Class: cmd_question
+  Output: Let's create a very simple string with paste. Just add "The number pi is" and pi (not as string, just as R object/function) as arguments to paste. 
+  CorrectAnswer: paste("The number pi is", pi)
+  AnswerTests: omnitest(correctExpr='paste("The number pi is", pi)')
+  Hint: Just type paste("The number pi is", pi).
+
+
+- Class: text
+  Output: As you can see, the default separator is a blank space (sep = " "). But you can select another character, for example sep = "-"
+  
+- Class: cmd_question
+  Output: Use the same arguments as before but also add the argument sep = "-" and see what happens. 
+  CorrectAnswer: paste("The number pi is", pi, sep = "-")
+  AnswerTests: omnitest(correctExpr='paste("The number pi is", pi, sep = "-")')
+  Hint: Just type paste("The number pi is", pi, sep = "-")
+
+- Class: cmd_question
+  Output: If you give paste() objects of different length, then it will apply a recycling rule. paste a single character "x" with the sequence 1:5, and separator sep = "_" and see what happens. 
+  CorrectAnswer: paste("x", 1:5, sep = "_")
+  AnswerTests: omnitest(correctExpr='paste("x", 1:5, sep = "_")')
+  Hint: Just type paste("x", 1:5, sep = "_")
+
+- Class: cmd_question
+  Output: Use the same code but also add this time collapse = "" as last argument and see what happens. 
+  CorrectAnswer: paste("X", 1:5, sep = "_", collapse = "")
+  AnswerTests: omnitest(correctExpr='paste("X", 1:5, sep = "_", collapse = "")')
+  Hint: Just type paste("X", 1:5, sep = "_", collapse = "")
+
+- Class: text
+  Output: As you can see, all the single strings were collapsed into on single string. In addition to paste(), there’s also the function paste0() which is the equivalent of paste(..., sep = "", collapse)
+
+- Class: cmd_question
+  Output: Let's use paste0(). Now with a great practical example. You have to create three strings for file names ("data01.csv" "data02.csv" "data03.csv"). Do this with paste0 - no need to add other arguments than the elements of the strings you want to create.
+  CorrectAnswer: paste0("data0", 1:3, ".csv")
+  AnswerTests: omnitest(correctExpr='paste0("data0", 1:3, ".csv")')
+  Hint: You have to combine "data0", 1:3 and ".csv" - try it!
+  
+- Class: text
+  Output: Now I will show you some basic functions.
+  
+- Class: cmd_question
+  Output: With nchar() you can count the number of characters in a string. Try it with the vector c("Adrian","Rauchfleisch")
+  CorrectAnswer: nchar(c("Adrian","Rauchfleisch"))
+  AnswerTests: omnitest(correctExpr='nchar(c("Adrian","Rauchfleisch"))')
+  Hint: Just  type nchar(c("Adrian","Rauchfleisch"))
+
+- Class: cmd_question
+  Output: 6 and 12 characters. Now use them together in one string "Adrian Rauchfleisch" with nchar.
+  CorrectAnswer: nchar("Adrian Rauchfleisch")
+  AnswerTests: omnitest(correctExpr='nchar("Adrian Rauchfleisch")')
+  Hint: Just  type nchar("Adrian Rauchfleisch")
+
+- Class: text
+  Output: As you can see the white space between the names is counted as one character.
+
+- Class: cmd_question
+  Output: Now try out "Adrian Rauchfleisch" with tolower()
+  CorrectAnswer: tolower("Adrian Rauchfleisch")
+  AnswerTests: omnitest(correctExpr='tolower("Adrian Rauchfleisch")')
+  Hint: Just  type tolower("Adrian Rauchfleisch")
+  
+- Class: cmd_question
+  Output: Now try out "Adrian Rauchfleisch" with toupper()
+  CorrectAnswer: toupper("Adrian Rauchfleisch")
+  AnswerTests: omnitest(correctExpr='toupper("Adrian Rauchfleisch")')
+  Hint: Just  type toupper("Adrian Rauchfleisch")
+
+- Class: cmd_question
+  Output: Why is this relevant for us? Create a vector first - taiwan <- rep(c("#Taiwan", "#taiwan"), 10)
+  CorrectAnswer: taiwan <- rep(c("#Taiwan", "#taiwan"), 10)
+  AnswerTests: omnitest(correctExpr='taiwan <- rep(c("#Taiwan", "#taiwan"), 10)')
+  Hint: Just type taiwan <- rep(c("#Taiwan", "#taiwan"), 10)
+
+- Class: cmd_question
+  Output: Now use the table() function with taiwan as argument. What will happen?
+  CorrectAnswer: table(taiwan)
+  AnswerTests: omnitest(correctExpr='table(taiwan)')
+  Hint: This one is easy, just use taiwan as argument in table()
+
+- Class: cmd_question
+  Output: As you can see the case makes a difference. This time use taiwan as argument with tolower and add that together as argument in table
+  CorrectAnswer: table(tolower(taiwan))
+  AnswerTests: omnitest(correctExpr='table(tolower(taiwan))')
+  Hint: just use tolower(taiwan) as argument in table()
+
+- Class: text
+  Output: Whenever you work with hashtags, use tolower first before you count the frequency etc.
+  
+- Class: text
+  Output: Let's continue with the package stringr and also some regex functions.
+  
+- Class: cmd_question
+  Output: Let's start with str_trim(). the function removes whitespace from start and end of string. Try it with the string " NTU ".
+  CorrectAnswer: str_trim(" NTU ")
+  AnswerTests: omnitest(correctExpr='str_trim(" NTU ")')
+  Hint: Just use " NTU " as argument in str_trim()
+
+- Class: text
+  Output: Now it's finally time for regex! 
+  
+- Class: text
+  Output: A regular expression is a special text string for describing a certain amount of text. This “certain amount of text” receives the formal name of pattern. In other words, a regular expression is a set of symbols that describes a text pattern. More formally we say that a regular expression is a pattern that describes a set of strings. 
+
+- Class: text
+  Output: In addition to this first meaning, the term regular expression can also be used in a slightly different but related way - as the formal language of these symbols that needs to be interpreted by a regular expression processor. Because the term “regular expression” is rather long, most people use the word regex as a shortcut term.    
+
+- Class: text
+  Output: So how are we going to use regex patterns? In the case of a phone number, that pattern might be three digits followed by a dash, followed by three digits and another dash, followed by four digits. Once you have defined a pattern then the regex processor will use our description to return matching results, or in the case of the test, to return true or false for whether or not it matched.
+
+- Class: text
+  Output: As with any other topic that has to do with programming and data analysis, learning the principles of regex and becoming fluent in defining regex patterns takes time and requires a lot of practice. The more you use them, the better you will become at defining more complex patterns and getting the most out of them
+
+- Class: text
+  Output: Despite the initial barriers that you may encounter when entering the regex world, the pain and frustration of learning this tool will payoff in your data science career.
+
+- Class: text
+  Output: Typically, regular expression patterns consist of a combination of alphanumeric characters as well as special characters. A regex pattern can be as simple as a single character, or it can be formed by several characters with a more complex structure. In all cases we construct regular expressions much in the same form in which we construct arithmetic expressions, by using various operators to combine smaller expressions. 
+
+- Class: cmd_question
+  Output: The first regular expression we are going to work with is "book". This pattern is formed by a letter b, followed by a letter o, followed by another letter o, followed by a letter k. As you may guess, this pattern matches the word book in the character vector "This book is mine". Type str_view("This book is mine", "book")
+  CorrectAnswer: str_view("This book is mine", "book")
+  AnswerTests: omnitest(correctExpr='str_view("This book is mine", "book")')
+  Hint: Just type str_view("This book is mine", "book")
+
+- Class: cmd_question
+  Output: As you can tell, the pattern "book" doesn’t match the entire content in the vector; it just matches those four letters. It may seem really simple but there are a couple of details to be highlighted. The first is that regex searches are case sensitive by default. This means that the pattern "Book" would not match "book". Try the same code again but change "book" to "Book"
+  CorrectAnswer: str_view("This book is mine", "Book")
+  AnswerTests: omnitest(correctExpr='str_view("This book is mine", "Book")')
+  Hint: Just type str_view("This book is mine", "Book")
+
+- Class: cmd_question
+  Output: No match this time. Let's try a new string. First create a new string. Just type this_book <- "This book is mine. I wrote this book with bookdown."
+  CorrectAnswer: this_book <- "This book is mine. I wrote this book with bookdown."
+  AnswerTests: omnitest(correctExpr='this_book <- "This book is mine. I wrote this book with bookdown."')
+  Hint: Just type this_book <- "This book is mine. I wrote this book with bookdown."
+
+- Class: cmd_question
+  Output: Now try this_book together with the pattern "book" in str_view()
+  CorrectAnswer: str_view(this_book, "book")
+  AnswerTests: omnitest(correctExpr='str_view(this_book, "book")')
+  Hint: Just type str_view(this_book, "book")
+  
+- Class: text
+  Output: As you can tell, only the first occurrence of book was matched. This is a common behavior of regular expressions in which they return a match as fast possible. You can think of this behavior as the “eager principle”, that is, regular expressions are eager and they will give preference to an early match. This is a minor but important detail and we will come back to this behavior of regular expressions.
+
+- Class: text
+  Output: All the letters and digits in the English alphabet are considered literal characters. They are called literal because they match themselves.
+    
+- Class: text
+  Output: The next topic that you should learn about regular expressions has to do with metacharacters. As you just learned, the most basic type of regular expressions are the literal characters which are characters that match themselves. However, not all characters match themselves. Any character that is not a literal character is a metacharacter. 
+
+- Class: text
+  Output: Here are all metacharacters .   \   |   (   )   [   ]   {   }   $   -    ^   *   +   ?
+ 
+- Class: text
+  Output: Everything else that you need to know about regular expressions besides literal characters is how these metacharacters work. The good news is that there are only a few metacharacters to learn. The bad news is that some metacharacters can have more than one meaning. And learning those meanings definitely takes time and requires hours of practice. The meaning of the metacharacters greatly depend on the context in which you use them, how you use them, and where you use them.
+
+- Class: text
+  Output: The first metacharacter you should learn about is the dot or period ".", better known as the wild metacharacter. This metacharacter is used to match ANY character except for a new line. 
+ 
+- Class: cmd_question
+  Output: First create a new character vector not <- c("not", "note", "knot", "nut")
+  CorrectAnswer: not <- c("not", "note", "knot", "nut")
+  AnswerTests: omnitest(correctExpr='not <- c("not", "note", "knot", "nut")')
+  Hint: Just type not <- c("not", "note", "knot", "nut")
+
+- Class: cmd_question
+  Output: Try it out with str_view(not, "n.t")
+  CorrectAnswer: str_view(not, "n.t")
+  AnswerTests: omnitest(correctExpr='str_view(not, "n.t")')
+  Hint: Just type str_view(not, "n.t")
+
+- Class: cmd_question
+  Output: The pattern "n.t" matches "not" in the first three elements, and "nut" in the last element. Try now the same with "no." as pattern.
+  CorrectAnswer: str_view(not, "no.")
+  AnswerTests: omnitest(correctExpr='str_view(not, "no.")')
+  Hint: Just type str_view(not, "no.")
+
+- Class: cmd_question
+  Output: Just the first three elements in not were matched. What if you just want to match the character dot? Create this vector fives <- c("5.00", "5100", "5-00", "5 00")
+  CorrectAnswer: fives <- c("5.00", "5100", "5-00", "5 00")
+  AnswerTests: omnitest(correctExpr='fives <- c("5.00", "5100", "5-00", "5 00")')
+  Hint: Just fives <- c("5.00", "5100", "5-00", "5 00")
+
+- Class: cmd_question
+  Output: Now try it with str_view(fives, "5.00")
+  CorrectAnswer: str_view(fives, "5.00")
+  AnswerTests: omnitest(correctExpr='str_view(fives, "5.00")')
+  Hint: Just type str_view(fives, "5.00")
+
+- Class: text
+  Output: To actually match the dot character, what you need to do is escape the metacharacter. In most languages, the way to escape a metacharacter is by adding a backslash character in front of the metacharacter  "\.". When you use a backslash in front of a metacharacter you are “escaping” the character, this means that the character no longer has a special meaning, and it will match itself.
+
+- Class: text
+  Output: However, R is a bit different. Instead of using a backslash you have to use two backslashes "5\\.00". This is because the backslash "\", which is another metacharacter, has a special meaning in R. Just remember - regex in R - use two \\ to escape any metcharacter!
+
+- Class: cmd_question
+  Output: Let's try this use str_view() with fives and "5.00". But add the escape character to "5.00" in order to escape the metacharacter .
+  CorrectAnswer: str_view(fives, "5\\.00")
+  AnswerTests: omnitest(correctExpr='str_view(fives, "5\\\\.00")')
+  Hint: We want to escape the metacharacter . Add \\ before . in the pattern.
+  
+- Class: text
+  Output: As you see only the first element is now matches as . is interpreted in its literal meaning.
+
+- Class: text
+  Output: Let's now learn more about character sets. You will learn about a couple of more metacharacters, the opening and closing brackets [ ], that will help you define a character set.
+    
+  
+- Class: cmd_question
+  Output: Create the following vector pnx <- c("pan", "pen", "pin", "p0n", "p.n", "p1n", "paun")
+  CorrectAnswer: pnx <- c('pan', 'pen', 'pin', 'p0n', 'p.n', 'p1n', 'paun')
+  AnswerTests: omnitest(correctExpr='pnx <- c("pan", "pen", "pin", "p0n", "p.n", "p1n", "paun")')
+  Hint: Just type pnx <- c("pan", "pen", "pin", "p0n", "p.n", "p1n", "paun")
+
+- Class: cmd_question
+  Output: Now use as string pnx and as pattern "p[aeiou]n" in str_view()
+  CorrectAnswer: str_view(pnx, "p[aeiou]n")
+  AnswerTests: omnitest(correctExpr='str_view(pnx, "p[aeiou]n")')
+  Hint: Type str_view(pnx, "p[aeiou]n")
+  
+- Class: text
+  Output: As you can tell, this time only the first three elements in pnx are matched. Notice also that paun is not matched. This is because the character set matches only one character, either a or u but not au.
+
+- Class: text
+  Output: If you want to match all numbers or all capital letters, you can use character ranges.
+
+- Class: cmd_question
+  Output: Create the vector triplets <- c("123", "abc", "ABC", ":-)")
+  CorrectAnswer: triplets <- c('123', 'abc', 'ABC', ':-)')
+  AnswerTests: omnitest(correctExpr='triplets <- c("123", "abc", "ABC", ":-)")')
+  Hint: Type triplets <- c("123", "abc", "ABC", ":-)")
+
+- Class: cmd_question
+  Output: Let's try the first range with numbers str_view(triplets, "[0-9]")
+  CorrectAnswer: str_view(triplets, "[0-9]")
+  AnswerTests: omnitest(correctExpr='str_view(triplets, "[0-9]")')
+  Hint: Type str_view(triplets, "[0-9]")
+
+- Class: text
+  Output: A character range consists of a character set with two characters separated by a dash or minus "-" sign. "[0-9]" matches all numbers between 0 and 9. Note that the dash is only a metacharacter when it is inside a character set; outside the character set it is just a literal dash.
+
+- Class: cmd_question
+  Output: Try the same but this time with "[a-z]" as pattern.
+  CorrectAnswer: str_view(triplets, "[a-z]")
+  AnswerTests: omnitest(correctExpr='str_view(triplets, "[a-z]")')
+  Hint: Type str_view(triplets, "[a-z]") 
+
+- Class: text
+  Output: All lower case letters abcd…xyz is compactly represented with the character range.
+
+- Class: cmd_question
+  Output: Try the same but this time with "[A-Z]" as pattern.
+  CorrectAnswer: str_view(triplets, "[A-Z]")
+  AnswerTests: omnitest(correctExpr='str_view(triplets, "[A-Z]")')
+  Hint: Type str_view(triplets, "[A-Z]")
+
+- Class: cmd_question
+  Output: Now let's match the capital letters three times in a row. Try "[A-Z][A-Z][A-Z]" as pattern
+  CorrectAnswer: str_view(triplets, "[A-Z][A-Z][A-Z]")
+  AnswerTests: omnitest(correctExpr='str_view(triplets, "[A-Z][A-Z][A-Z]")')
+  Hint: Type str_view(triplets, "[A-Z][A-Z][A-Z]")
+
+- Class: cmd_question
+  Output: This is a little bit complicated. Try to use the metacharacter +. Use "[A-Z]+" as pattern.
+  CorrectAnswer: str_view(triplets, "[A-Z]+")
+  AnswerTests: omnitest(correctExpr='str_view(triplets, "[A-Z]+")')
+  Hint: Type str_view(triplets, "[A-Z]+")
+  
+- Class: cmd_question
+  Output: + means that the preceding item will be matched one or more times. Now try with "[A-Z]{2}"
+  CorrectAnswer: str_view(triplets, "[A-Z]{2}")
+  AnswerTests: omnitest(correctExpr='str_view(triplets, "[A-Z]{2}")')
+  Hint: Type str_view(triplets, "[A-Z]{2}")
+
+- Class: cmd_question
+  Output: We are now using "{n}". This means that the preceding item is matched exactly n times. Now try "\\w+" as pattern which matches a word character
+  CorrectAnswer: str_view(triplets, "\\w+")
+  AnswerTests: omnitest(correctExpr='str_view(triplets, "\\\\w+")')
+  Hint: Type str_view(triplets, "\\w+")
+
+- Class: text
+  Output: Let's continue with some Twitter examples and the function str_extract() and str_extract_all(). I have downloaded 100 tweets with the keyword "clinton"
+
+- Class: cmd_question
+  Output: Let's extract hashtags with "#\\w+". We want the hashtag sign followed at least by one word character. Try this with str_extract. Subset the column text with $ and use as second argument the pattern.  
+  CorrectAnswer: str_extract(clinton_tweets$text, "#\\w+")
+  AnswerTests: omnitest(correctExpr='str_extract(clinton_tweets$text, "#\\\\w+")')
+  Hint: Type str_extract(clinton_tweets$text, "#\\w+")
+
+- Class: text
+  Output: We get back a vector of the same length. However, we only get the first hashtag in every tweet.
+  
+- Class: cmd_question
+  Output: Try exactly the same arguments but this time with the function str_extract_all()
+  CorrectAnswer: str_extract_all(clinton_tweets$text, "#\\w+")
+  AnswerTests: omnitest(correctExpr='str_extract_all(clinton_tweets$text, "#\\\\w+")')
+  Hint: Type str_extract_all(clinton_tweets$text, "#\\w+")
+
+- Class: text
+  Output: Scroll up a little in the console, now we have sometimes more than just one hashtag. You also see [[]] - this means we have now a list.
+  
+- Class: cmd_question
+  Output: Try again the same function but now put it inside of unlist()
+  CorrectAnswer: unlist(str_extract_all(clinton_tweets$text, "#\\w+"))
+  AnswerTests: omnitest(correctExpr='unlist(str_extract_all(clinton_tweets$text, "#\\\\w+"))')
+  Hint: Type unlist(str_extract_all(clinton_tweets$text, "#\\w+")) 
+  
+- Class: text
+  Output: 23 hashtags were used in the 100 tweets. Some of the hashtags exist with and without capital letters (e.g., metoo and Metoo). That is why we need tolower if we want to further analyze these hashtags.
+
+- Class: cmd_question
+  Output: I want to show you one specific example for the @username and how we work with it. Extract the following single tweet -  single_tweet <- clinton_tweets[78, ]$text
+  CorrectAnswer: single_tweet <- clinton_tweets[78, ]$text
+  AnswerTests: omnitest(correctExpr='single_tweet <- clinton_tweets[78, ]$text')
+  Hint: Type single_tweet <- clinton_tweets[78, ]$text
+
+- Class: cmd_question
+  Output: Just type single_tweet into the console and check out the content of the tweet.
+  CorrectAnswer: single_tweet
+  AnswerTests: omnitest(correctExpr='single_tweet')
+  Hint: Type single_tweet
+
+- Class: cmd_question
+  Output: This tweet has four users receiving the reply (the first four usernames at the beginning) and one mention (@HillaryClinton) in the middle of the tweet. Try now str_extract_all(single_tweet, "@\\w+")
+  CorrectAnswer: str_extract_all(single_tweet, "@\\w+")
+  AnswerTests: omnitest(correctExpr='str_extract_all(single_tweet, "@\\\\w+")')
+  Hint: Type str_extract_all(single_tweet, "@\\w+")
+
+- Class: cmd_question
+  Output: As you can see - we extract all and cannot distinguish between mention and reply anymore. Therefore we could use "(@\\w+ )+" with str_extract(). Try it!
+  CorrectAnswer: str_extract(single_tweet, "(@\\w+ )+" )
+  AnswerTests: omnitest(correctExpr='str_extract(single_tweet, "(@\\\\w+ )+")')
+  Hint: Type str_extract(single_tweet, "(@\\w+ )+")
+
+- Class: text
+  Output: The brackets indicate that this is a full expression. The + behind the brackets means match the expression in the brackets one or more times. 
+  
+- Class: cmd_question
+  Output: Use the exact same code again and save the result in usernames
+  CorrectAnswer:  usernames <- str_extract(single_tweet, "(@\\w+ )+")
+  AnswerTests: omnitest(correctExpr='usernames <- str_extract(single_tweet, "(@\\\\w+ )+")')
+  Hint: Type usernames <- str_extract(single_tweet, "(@\\w+ )+")
+  
+- Class: cmd_question
+  Output: usernames is now still one string. Try to use the function str_split. The first argument is the string, the second argument is the pattern where we want to split the strings. Try str_split(usernames, " ")
+  CorrectAnswer:  str_split(usernames, " ")
+  AnswerTests: omnitest(correctExpr='str_split(usernames, " ")')
+  Hint: Type str_split(usernames, " ")
+
+- Class: cmd_question
+  Output: We have one last problem - we get one empty string at the end. Remember the str_trim() function? Use usernames as argument and save all again in usernames
+  CorrectAnswer: usernames <- str_trim(usernames)
+  AnswerTests: omnitest(correctExpr='usernames <- str_trim(usernames)')
+  Hint: Type usernames <- str_trim(usernames)
+
+- Class: cmd_question
+  Output: Now use again str_split with usernames and " " as before.
+  CorrectAnswer:  str_split(usernames, " ")
+  AnswerTests: omnitest(correctExpr='str_split(usernames, " ")')
+  Hint: Type str_split(usernames, " ")
+
+- Class: text
+  Output: Great job! Now you also have a list as you can see. You should use unlist in order to collapse the list and to create one vector. 
+  
+- Class: text
+  Output: If you want to use that method - first filter the tweets - keep only the replies and then use the regex pattern on these filtered replies. You can use !is.na() with the column reply_to_status_id for example.
+
+- Class: mult_question
+  Output: Thank you for finishing this course. Press Enter and then please copy the completion code that will appear in the console after this question into the google form I created (check your email). Would you like to get the completion code? Type the number next to Yes and press Enter - then you need to Enter your student id and name.
+  CorrectAnswer: NULL
+  AnswerChoices: Yes;No
+  AnswerTests: get_token()
+  Hint: NULL
+
+- Class: text
+  Output: Good job - that's it for this week!
+  
+
+- Class: text
+  Output: That's it for today! We will cover more text mining next week.
