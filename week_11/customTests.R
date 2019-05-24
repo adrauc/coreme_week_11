@@ -22,3 +22,10 @@ get_token <- function() {
   # Return TRUE to satisfy swirl and return to course menu
   TRUE
 }
+
+readline_clean <- function(prompt = "") {
+  wrapped <- strwrap(prompt, width = getOption("width") - 2)
+  mes <- stringr::str_c("| ", wrapped, collapse = "\n")
+  message(mes)
+  readline()
+}
