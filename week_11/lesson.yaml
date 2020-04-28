@@ -1,6 +1,6 @@
 - Class: meta
-  Course: socne week 06
-  Lesson: week 06
+  Course: coreme week 09
+  Lesson: week 09
   Author: Adrian Rauchfleisch (borrowed parts from Gaston Sanchez)
   Type: Standard
   Organization: National Taiwan University
@@ -387,7 +387,7 @@
   Output: If you want to use that method - first filter the tweets - keep only the replies and then use the regex pattern on these filtered replies. You can use !is.na() with the column reply_to_status_id for example.
 
 - Class: mult_question
-  Output: Thank you for finishing this course. Press Enter and then please copy the completion code that will appear in the console after this question into the google form I created (check your email). Would you like to get the completion code? Type the number next to Yes and press Enter - then you need to Enter your student id and name.
+  Output: Thank you for finishing this course. Press Enter and then please copy the completion code that will appear in the console after this question into the google form I created (https://forms.gle/Rj9TX6v2ofWgVihU6). Would you like to get the completion code? Type the number next to Yes and press Enter - then you need to Enter your student id and name.
   CorrectAnswer: NULL
   AnswerChoices: Yes;No
   AnswerTests: get_token()
